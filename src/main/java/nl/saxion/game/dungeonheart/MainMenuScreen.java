@@ -17,7 +17,7 @@ public class MainMenuScreen extends ScalableGameScreen {
     private final int BUTTON_WIDTH = 560;
     private final int BUTTON_HEIGHT = 150;
     private final String BUTTON_FONT = "jumpsWinter";
-    private final String BUTTON_TEXTURE = "buttonOne";
+    private final String BUTTON_TEXTURE = "buttonOne";// change
 
     private final Button exitButton = new Button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXTURE, "exitButton", "EXIT", BUTTON_FONT);
     private final Button leadersBoardButton = new Button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXTURE, "leadersBoarButton", "Leaders", BUTTON_FONT);
