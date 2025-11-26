@@ -1,0 +1,2 @@
+INFO: Clicked mainScreenBackground
+ERROR: Task failed: Clicked mainScreenBackground - Cannot invoke "java.lang.Runnable.run()" because "this.onClick" is null
