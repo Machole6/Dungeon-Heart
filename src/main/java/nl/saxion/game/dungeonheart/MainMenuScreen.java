@@ -54,13 +54,12 @@ public class MainMenuScreen extends ScalableGameScreen {
 
         exitButton.onClick = GameApp::quit;
 
-        exitButton.onHover = () -> exitButton.changeTexture(BUTTON_TEXTURE_ON_HOVER);
-        exitButton.onUhnover = () -> exitButton.changeTexture(BUTTON_TEXTURE);
-        startButton.onHover = () -> startButton.changeTexture(BUTTON_TEXTURE_ON_HOVER);
-        startButton.onUhnover = () -> startButton.changeTexture(BUTTON_TEXTURE);
-        leadersBoardButton.onHover = () -> leadersBoardButton.changeTexture(BUTTON_TEXTURE_ON_HOVER);
-        leadersBoardButton.onUhnover = () -> leadersBoardButton.changeTexture(BUTTON_TEXTURE);
-        // make a function that sets on hover effect for every button on screen
+        Component.setOnHoverFor((button) -> {
+            button.changeTexture(BUTTON_TEXTURE_ON_HOVER);
+        }, exitButton, leadersBoardButton, startButton);
+        Component.setOnUnhoverFor((button) -> {
+            button.changeTexture(BUTTON_TEXTURE);
+        }, exitButton, leadersBoardButton, startButton);
 
         GameApp.endSpriteRendering();
     }

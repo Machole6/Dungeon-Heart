@@ -5,7 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import nl.saxion.game.dungeonheart.managers.LogsManager;
 import nl.saxion.gameapp.GameApp;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 public abstract class Component {
+    protected Map<String, Component> componentsMap = new HashMap<>();
     protected int height;
     protected int width;
     protected String textureId;
@@ -14,9 +20,9 @@ public abstract class Component {
     protected float y;
     protected boolean isEnabled = true;
     protected  boolean isHovered = false;
-    public Runnable onHover;
+    private Consumer<Component>onHover;
+    private Consumer<Component> onUnhover;
     public Runnable onClick;
-    public Runnable onUhnover;
 
     protected Component(int width, int height, String textureId, String id) {
         this.height = height;
@@ -33,11 +39,11 @@ public abstract class Component {
             LogsManager.runWithLogging("Clicked " + this.id, () -> onClick.run());
         } else if (this.onHover != null && checkIfMouseIsOverComponent() && isEnabled) {
             this.isHovered = true;
-            LogsManager.runWithLogging("Hovered " + this.id, () -> onHover.run());
+            LogsManager.runWithLogging("Hovered " + this.id, () -> onHover.accept(this));
             GameApp.drawTexture(this.textureId, this.x, this.y, this.width, this.height);
-        } else if (this.onUhnover != null && this.isHovered && !checkIfMouseIsOverComponent() && isEnabled)  {
+        } else if (this.onUnhover != null && this.isHovered && !checkIfMouseIsOverComponent() && isEnabled)  {
             this.isHovered = false;
-            LogsManager.runWithLogging("Unhovered " + this.id, () -> onUhnover.run());
+            LogsManager.runWithLogging("Unhovered " + this.id, () -> onUnhover.accept(this));
             GameApp.drawTexture(this.textureId, this.x, this.y, this.width, this.height);
         } else {
             GameApp.drawTexture(this.textureId, this.x, this.y, this.width, this.height);
@@ -72,6 +78,18 @@ public abstract class Component {
         this.textureId = newTextureId;
         if (!GameApp.hasTexture(newTextureId)) {
             GameApp.addTexture(newTextureId, "textures/" + newTextureId + ".png");
+        }
+    }
+
+    public static void setOnHoverFor(Consumer<Component> action, Component ... components) {
+        for (Component component : components) {
+            component.onHover = action;
+        }
+    }
+
+    public static void setOnUnhoverFor(Consumer<Component> action, Component ... components) {
+        for (Component component : components) {
+            component.onUnhover = action;
         }
     }
 }
