@@ -19,6 +19,7 @@ public class Button extends Component {
         this.text = text;
         this.font = font;
         this.isEnabled = true;
+        this.componentsMap.put("buttons", this);
     }
 
     @Override
@@ -28,5 +29,9 @@ public class Button extends Component {
 
         super.render(x, y);
         GameApp.drawTextCentered(this.font, this.text, x + (float) this.width / 2, y + (float) this.height / 2 + 10, Color.WHITE);
+    }
+
+    public Button getButtonById(String id) {
+        return (Button) componentsMap.get(id);
     }
 }
