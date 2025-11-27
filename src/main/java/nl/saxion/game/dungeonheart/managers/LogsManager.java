@@ -12,17 +12,18 @@ import java.util.function.Supplier;
 
 public class LogsManager {
     private static final Logger logger = LoggerFactory.getLogger(LogsManager.class);
+    private static final String LOG_FILE = "src/main/java/nl/saxion/game/dungeonheart/logs/last_frame.log";
 
     private static final int BUFFER_SIZE = 100;
     private static final Deque<String> rollingBuffer = new ArrayDeque<>(BUFFER_SIZE);
 
     static {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            flushBufferToFile("logs/frame.log");
+            flushBufferToFile(LOG_FILE);
         }));
     }
 
-    private static void addToBuffer(String message) {
+    public static void addToBuffer(String message) {
         if (rollingBuffer.size() == BUFFER_SIZE) {
             rollingBuffer.removeFirst();
         }
@@ -56,7 +57,7 @@ public class LogsManager {
         } catch (Exception e) {
             logger.error("Task failed: {}", description, e);
             addToBuffer("ERROR: Task failed: " + description + " - " + e.getMessage());
-            flushBufferToFile("logs/last_frame.log");
+            flushBufferToFile(LOG_FILE);
         }
     }
 
@@ -67,7 +68,7 @@ public class LogsManager {
         } catch (Exception e) {
             logger.error("Task failed: {}", description, e);
             addToBuffer("ERROR: Task failed: " + description + " - " + e.getMessage());
-            flushBufferToFile("logs/last_frame.log");
+            flushBufferToFile(LOG_FILE);
             return null;
         }
     }
