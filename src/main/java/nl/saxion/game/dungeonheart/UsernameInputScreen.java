@@ -11,7 +11,8 @@ public class UsernameInputScreen extends ScalableGameScreen {
 
     @Override
     public void show() {
-        // this is how you get the username from the database (maybe you'll need it idk just showing)
+        // this is how you get the username from the database (you only show this screen if it null
+        // ... meaning that user doesn't have a username yet)
         final String username = Database.Users.getCurrentUsername();
         /// this is how you set a username, you will aboslutely need this one)
         Database.Users.updateCurrentUsername("megagayboy123");
