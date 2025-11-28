@@ -31,4 +31,8 @@ public class DataManager {
         }
         return null;
     }
+
+    public static ObjectId getCurrentUserID() {
+        return getCurrentUserData()._id;
+    }
 }

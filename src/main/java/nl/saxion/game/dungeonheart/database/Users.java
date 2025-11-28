@@ -4,6 +4,7 @@ import com.mongodb.client.MongoDatabase;
 
 import com.mongodb.client.result.UpdateResult;
 import nl.saxion.game.dungeonheart.database.Schemas.UserSchema;
+import nl.saxion.game.dungeonheart.managers.DataManager;
 import nl.saxion.game.dungeonheart.managers.LogsManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -73,5 +74,23 @@ public class Users extends Collection {
             userSchemas.add(user);
         }
         return userSchemas;
+    }
+
+    public int getCurrentUserLevel() {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        final Document userData = Database.Users.find(userId);
+        final int userLevel = Integer.parseInt(userData.get("level").toString());
+        return userLevel;
+    }
+
+    public String getCurrentUsername() {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        final Document userData = Database.Users.find(userId);
+        return userData.get("username").toString();
+    }
+
+    public void updateCurrentUsername(String username) {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        Database.Users.updateField("username", username, userId);
     }
 }
