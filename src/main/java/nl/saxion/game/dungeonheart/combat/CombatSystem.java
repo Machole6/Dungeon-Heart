@@ -39,16 +39,14 @@ public class CombatSystem {
         for (EnemyComponent ec : enemyComponents) {
             ec.onClick = () -> {
                 if (currentState == State.SELECT_ENEMY && selectedHero != null) {
-                    // Hero attacks enemy
+
                     selectedHero.getHero().attack(ec.getEnemy());
                     selectedHero = null;
 
-                    // Remove dead enemy if applicable
                     if (!ec.getEnemy().isAlive()) {
                         enemyComponents.remove(ec);
                     }
 
-                    // Next state: enemy turn or next hero
                     currentState = State.ENEMY_TURN;
                     enemyTurn();
                 }
@@ -57,20 +55,17 @@ public class CombatSystem {
     }
 
     private void enemyTurn() {
-        // Each alive enemy attacks a random alive hero
         for (EnemyComponent ec : enemyComponents) {
             if (!heroComponents.isEmpty()) {
                 HeroComponent target = heroComponents.get(random.nextInt(heroComponents.size()));
                 ec.getEnemy().attack(target.getHero());
 
-                // Remove dead hero if applicable
                 if (!target.getHero().isAlive()) {
                     heroComponents.remove(target);
                 }
             }
         }
 
-        // After enemy turn, check for win/loss
         checkWin();
     }
 
@@ -84,6 +79,10 @@ public class CombatSystem {
         } else {
             currentState = State.SELECT_HERO;
         }
+
+        System.out.println("DEBUG -> heroes=" + heroComponents.size() +
+                ", enemies=" + enemyComponents.size());
+
     }
 
     public State getCurrentState() {

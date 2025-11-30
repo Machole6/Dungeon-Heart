@@ -24,7 +24,7 @@ public class CombatScreen extends ScalableGameScreen {
 
     @Override
     public void show() {
-        // Example: create one hero and one enemy
+
         Hero hero = new Hero("Warrior", 100, 20);
         HeroComponent hc = new HeroComponent(hero, 100, 100, "heroTexture", "hero1");
         heroComponents.add(hc);
@@ -33,11 +33,14 @@ public class CombatScreen extends ScalableGameScreen {
         EnemyComponent ec = new EnemyComponent(enemy, 100, 100, "enemyTexture", "enemy1");
         enemyComponents.add(ec);
 
-        // Register textures in GameApp
+        Enemy enemy1 = new Enemy("Goblin", 50, 10);
+        EnemyComponent ec1 = new EnemyComponent(enemy1, 100, 100, "enemyTexture", "enemy2");
+        enemyComponents.add(ec1);
+
         HeroComponent.register(hc);
         EnemyComponent.register(ec);
+        EnemyComponent.register(ec1);
 
-        // Initialize combat system
         combatSystem = new CombatSystem(heroComponents, enemyComponents);
     }
 
@@ -48,26 +51,22 @@ public class CombatScreen extends ScalableGameScreen {
         GameApp.clearScreen("black");
         GameApp.startSpriteRendering();
 
-        // Render heroes
         int x = 100;
         int y = 300;
         for (HeroComponent hc : heroComponents) {
             hc.render(x, y);
-            // Move next hero horizontally
             x += 150;
         }
 
-        // Render enemies
-        x = 100;
-        y = 100;
+        x = 1280 - 200 - 100;
+        y = 300;
         for (EnemyComponent ec : enemyComponents) {
             ec.render(x, y);
-            x += 150;
+            x -= 150;
         }
 
         GameApp.endSpriteRendering();
 
-        // Handle clicks
         if (GameApp.isButtonJustPressed(Input.Buttons.LEFT)) {
             int mouseX = GameApp.getMousePositionInWindowX();
             int mouseY = GameApp.getWindowHeight() - GameApp.getMousePositionInWindowY();
@@ -79,12 +78,13 @@ public class CombatScreen extends ScalableGameScreen {
             for (EnemyComponent ec : enemyComponents) {
                 ec.handleClick(mouseX, mouseY);
             }
+
         }
     }
 
     @Override
     public void hide() {
-        HeroComponent.dispose(heroComponents.toArray(new HeroComponent[0]));
-        EnemyComponent.dispose(enemyComponents.toArray(new EnemyComponent[0]));
+//        HeroComponent.dispose(heroComponents.toArray(new HeroComponent[0]));
+//        EnemyComponent.dispose(enemyComponents.toArray(new EnemyComponent[0]));
     }
 }

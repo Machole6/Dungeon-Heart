@@ -1,5 +1,6 @@
 package nl.saxion.game;
 
+import nl.saxion.game.dungeonheart.CombatScreen;
 import nl.saxion.game.dungeonheart.LeadersScreen;
 import nl.saxion.game.dungeonheart.LevelsScreen;
 import nl.saxion.game.dungeonheart.MainMenuScreen;
@@ -14,6 +15,7 @@ public class Main {
         GameApp.addScreen("MainMenuScreen", new MainMenuScreen());
         GameApp.addScreen("LeadersScreen", new LeadersScreen());
         GameApp.addScreen("LevelsScreen", new LevelsScreen());
+        GameApp.addScreen("CombatScreen", new CombatScreen());
 
         UserSchema userData = DataManager.getCurrentUserData();
         LogsManager.runWithLogging("Refreshing the database", () -> {

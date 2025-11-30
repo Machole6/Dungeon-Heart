@@ -19,13 +19,13 @@ public class HeroComponent extends Component {
     public void render(float x, float y) {
         super.render(x, y);
 
-        GameApp.drawText(
-                "basic",
+
+        GameApp.drawText("basic",
                 "HP: " + hero.getHealth(),
                 this.x,
-                this.y - 0.2f * this.height,
-                Color.WHITE
-        );
+                this.y - 0.5f * this.height,
+                Color.WHITE);
+
     }
     public void handleClick(float mouseX, float mouseY) {
         if (mouseX >= x && mouseX <= x + width &&

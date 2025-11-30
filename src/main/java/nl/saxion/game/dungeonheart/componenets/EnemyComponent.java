@@ -22,7 +22,7 @@ public class EnemyComponent extends Component {
                 "basic",
                 "HP: " + enemy.getHealth(),
                 this.x,
-                this.y - 0.2f * this.height,
+                this.y - 0.5f * this.height,
                 Color.RED
         );
     }
