@@ -12,8 +12,8 @@ import java.util.function.Function;
 
 public abstract class Component {
     protected Map<String, Component> componentsMap = new HashMap<>();
-    protected int height;
-    protected int width;
+    public float height;
+    public float width;
     protected String textureId;
     protected String id;
     protected float x;
@@ -40,7 +40,7 @@ public abstract class Component {
         } else if (this.onHover != null && checkIfMouseIsOverComponent() && isEnabled) {
             this.isHovered = true;
             LogsManager.runWithLogging("Hovered " + this.id, () -> onHover.accept(this));
-            GameApp.drawTexture(this.textureId, this.x, this.y, this.width, this.height);
+            GameApp.drawTexture(this.textureId, this.x, this.y, (float) this.width, this.height);
         } else if (this.onUnhover != null && this.isHovered && !checkIfMouseIsOverComponent() && isEnabled)  {
             this.isHovered = false;
             LogsManager.runWithLogging("Unhovered " + this.id, () -> onUnhover.accept(this));

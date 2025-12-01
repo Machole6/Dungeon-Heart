@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import nl.saxion.game.dungeonheart.componenets.Button;
 import nl.saxion.game.dungeonheart.componenets.Component;
 import nl.saxion.game.dungeonheart.componenets.Texture;
+import nl.saxion.game.dungeonheart.database.Database;
 import nl.saxion.game.dungeonheart.managers.LogsManager;
 import nl.saxion.gameapp.GameApp;
 import nl.saxion.gameapp.screens.ScalableGameScreen;
@@ -49,12 +50,15 @@ public class MainMenuScreen extends ScalableGameScreen {
         GameApp.startSpriteRendering();
 
 
+        final int userLevel = Database.Users.getCurrentUserLevel();
+
         background.render(0, 0);
         exitButton.render(40, 40);
         leadersBoardButton.render(40, 200);
         startButton.render(40, 360);
         testCombatButton.render(900, 100);
         GameApp.drawText("jumpsWinterSmaller", "Your current\nlevel is: 1", 40, 540, Color.WHITE);
+        GameApp.drawText("jumpsWinterSmaller", "Your current\nlevel is: " + userLevel, 40, 540, Color.WHITE);
         GameApp.drawText("grinched", "Dungeon\n   Heart", 745, 300, Color.WHITE);
         heart.render(830, 20);
 
@@ -85,5 +89,4 @@ public class MainMenuScreen extends ScalableGameScreen {
         GameApp.disposeFont("grinched");
         Component.dispose(exitButton, leadersBoardButton, startButton, background, heart, testCombatButton);
     }
-
 }

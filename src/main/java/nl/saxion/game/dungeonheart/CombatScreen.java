@@ -84,7 +84,7 @@ public class CombatScreen extends ScalableGameScreen {
 
     @Override
     public void hide() {
-//        HeroComponent.dispose(heroComponents.toArray(new HeroComponent[0]));
-//        EnemyComponent.dispose(enemyComponents.toArray(new EnemyComponent[0]));
+        HeroComponent.dispose(heroComponents.toArray(new HeroComponent[0]));
+        EnemyComponent.dispose(enemyComponents.toArray(new EnemyComponent[0]));
     }
 }

@@ -35,7 +35,6 @@ public class CombatSystem {
             };
         }
 
-        // Assign click behavior for enemies
         for (EnemyComponent ec : enemyComponents) {
             ec.onClick = () -> {
                 if (currentState == State.SELECT_ENEMY && selectedHero != null) {
