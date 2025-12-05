@@ -2,6 +2,11 @@ package nl.saxion.game.dungeonheart;
 
 public class Scene {
 
+<<<<<<< Updated upstream
+=======
+    static int[] Screen = {1,2,3,4,5,6};
+
+>>>>>>> Stashed changes
     public static String Story(int number) {
 
         String[] dialogue = {"Peter Piper picked a \n" +
