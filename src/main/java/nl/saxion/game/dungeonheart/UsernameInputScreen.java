@@ -1,21 +1,13 @@
 package nl.saxion.game.dungeonheart;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import nl.saxion.game.dungeonheart.componenets.Button;
 import nl.saxion.game.dungeonheart.componenets.Component;
 import nl.saxion.game.dungeonheart.componenets.Texture;
 import nl.saxion.game.dungeonheart.database.Database;
-import nl.saxion.game.dungeonheart.database.Schemas.UserSchema;
-import nl.saxion.game.dungeonheart.managers.DataManager;
-import nl.saxion.game.dungeonheart.managers.LogsManager;
 import nl.saxion.gameapp.GameApp;
 import nl.saxion.gameapp.screens.ScalableGameScreen;
-
-import java.awt.*;
 
 public class UsernameInputScreen extends ScalableGameScreen {
     private final Texture background = new Texture(1280, 720, "mainScreenBackground");
