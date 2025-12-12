@@ -49,7 +49,6 @@ public class MainMenuScreen extends ScalableGameScreen {
         GameApp.clearScreen("black");
         GameApp.startSpriteRendering();
 
-
         final int userLevel = Database.Users.getCurrentUserLevel();
 
         background.render(0, 0);
@@ -89,4 +88,5 @@ public class MainMenuScreen extends ScalableGameScreen {
         GameApp.disposeFont("grinched");
         Component.dispose(exitButton, leadersBoardButton, startButton, background, heart, testCombatButton);
     }
+
 }
