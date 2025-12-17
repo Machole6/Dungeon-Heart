@@ -1,12 +1,10 @@
+/*
 package nl.saxion.game.dungeonheart;
 
-<<<<<<< Updated upstream
-=======
 import ch.qos.logback.core.joran.conditional.IfAction;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
->>>>>>> Stashed changes
 import com.badlogic.gdx.graphics.Color;
 import nl.saxion.gameapp.GameApp;
 import nl.saxion.gameapp.screens.ScalableGameScreen;
@@ -19,37 +17,27 @@ public class Text extends ScalableGameScreen {
     int letterIndex = 0;
     String renderedString = "";
     int screenNumber;
-<<<<<<< Updated upstream
 
 
     public Text(int number) {
         super(1100, 1100);
-=======
     float delay = -1;
     float setDelay = 0;
 
 
     public Text(int number) {
         super(1280, 720);
->>>>>>> Stashed changes
         screenNumber = number;
     }
 
     public Text() {
-<<<<<<< Updated upstream
-        super(1100, 1100);
-=======
         super(1280, 720);
->>>>>>> Stashed changes
     }
 
     @Override
     public void show() {
-<<<<<<< Updated upstream
-=======
         GameApp.addTimer("Timer1", 30f, false);
         GameApp.addFont("grinched", "fonts/grinched.otf", 50);
->>>>>>> Stashed changes
     }
 
 
@@ -61,13 +49,7 @@ public class Text extends ScalableGameScreen {
 
         GameApp.startSpriteRendering();
 
-
-<<<<<<< Updated upstream
         text(Scene.Story(screenNumber), delta);
-
-
-
-=======
 
         text(Scene.Story(screenNumber), delta);
 
@@ -87,8 +69,6 @@ public class Text extends ScalableGameScreen {
         if (GameApp.isKeyPressed(Input.Keys.ENTER)){
             GameApp.switchScreen("LeadersScreen");
         }
->>>>>>> Stashed changes
-
         GameApp.endSpriteRendering();
 
     }
@@ -107,19 +87,13 @@ public class Text extends ScalableGameScreen {
             }
         }
         textAnimationFrames += delta;
-<<<<<<< Updated upstream
-=======
         delay += delta;
->>>>>>> Stashed changes
     }
 
 
     @Override
     public void hide() {
-
-<<<<<<< Updated upstream
-=======
         GameApp.disposeFont("grinched");
->>>>>>> Stashed changes
     }
 }
+*/

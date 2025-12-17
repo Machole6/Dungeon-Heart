@@ -27,10 +27,7 @@ public class MainMenuScreen extends ScalableGameScreen {
     private final Button startButton = new Button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXTURE, "startButton", "START", BUTTON_FONT);
     private final Texture background = new Texture(1280, 720, "mainScreenBackground");
     private final Texture heart = new Texture(300, 300, "heart");
-    private final Button testCombatButton = new Button(  //combat test button
-            BUTTON_WIDTH-500, BUTTON_HEIGHT-60, BUTTON_TEXTURE,
-            "testCombatButton", "TEST COMBAT", BUTTON_FONT
-    );
+    private final Button testCombatButton = new Button(BUTTON_WIDTH-500, BUTTON_HEIGHT-60, BUTTON_TEXTURE, "testCombatButton", "TEST COMBAT", BUTTON_FONT);
 
     @Override
     public void show() {
@@ -55,7 +52,7 @@ public class MainMenuScreen extends ScalableGameScreen {
         exitButton.render(40, 40);
         leadersBoardButton.render(40, 200);
         startButton.render(40, 360);
-        testCombatButton.render(900, 100);
+//        testCombatButton.render(900, 100);
         GameApp.drawText("jumpsWinterSmaller", "Your current\nlevel is: 1", 40, 540, Color.WHITE);
         GameApp.drawText("jumpsWinterSmaller", "Your current\nlevel is: " + userLevel, 40, 540, Color.WHITE);
         GameApp.drawText("grinched", "Dungeon\n   Heart", 745, 300, Color.WHITE);
