@@ -54,6 +54,10 @@ public class CombatScreen extends ScalableGameScreen {
 
         Component.register(background);
 
+        for (HeroComponent hc : heroComponents) {
+            hc.getHero().resetHealth();
+        }
+
         List<Enemy> enemies = LevelManager.getEnemiesForLevel(levelNumber);
 
         int index = 1;
@@ -171,7 +175,7 @@ public class CombatScreen extends ScalableGameScreen {
             ec.render(x, y);
         }
 
-        GameApp.drawText("jumpsWinter", "LEVEL " + levelNumber, 900, 640, Color.WHITE);
+        GameApp.drawText("jumpsWinter", "LEVEL " + levelNumber, 450, 640, Color.WHITE);
 
         if (combatSystem.getCurrentState() == CombatSystem.State.END_COMBAT) {
             boolean heroesAlive = !combatSystem.getHeroComponents().isEmpty();

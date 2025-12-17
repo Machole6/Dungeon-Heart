@@ -34,4 +34,8 @@ public abstract class Unit {
     public int getAttackPower() {
         return attackPower;
     }
+
+    public void resetHealth() {
+        currentHealth = maxHealth;
+    }
 }
