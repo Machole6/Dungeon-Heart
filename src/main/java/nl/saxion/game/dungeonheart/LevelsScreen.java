@@ -1,5 +1,6 @@
 package nl.saxion.game.dungeonheart;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import nl.saxion.game.dungeonheart.componenets.Button;
 import nl.saxion.game.dungeonheart.componenets.Component;
@@ -96,6 +97,12 @@ public class LevelsScreen extends ScalableGameScreen  {
         levelButtons.get(6).width = (float) (LEVEL_BUTTON_WIDTH * 1.2);
         levelButtons.get(6).height = (float) (LEVEL_BUTTON_WIDTH * 1.2);
         levelButtons.get(6).render(630, 280);
+
+        GameApp.addScreen("Move", new combatMovement());
+
+
+        levelButtons.get(1).onClick = () -> GameApp.switchScreen("Move");
+
 
         heart.render(830, 20);
 
