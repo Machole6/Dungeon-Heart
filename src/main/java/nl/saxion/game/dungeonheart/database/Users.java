@@ -6,6 +6,8 @@ import com.mongodb.client.result.UpdateResult;
 import nl.saxion.game.dungeonheart.database.Schemas.UserSchema;
 import nl.saxion.game.dungeonheart.managers.DataManager;
 import nl.saxion.game.dungeonheart.managers.LogsManager;
+import org.bson.BsonArray;
+import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -13,6 +15,7 @@ import static com.mongodb.client.model.Filters.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Users extends Collection {
     public Users(MongoDatabase database) {
@@ -89,8 +92,44 @@ public class Users extends Collection {
         return userData.get("username").toString();
     }
 
+    public List<String> getUserHeroes() {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        final Document userData = Database.Users.find(userId);
+        BsonArray BsonHeroesList = userData.toBsonDocument().getArray("heroesList");
+        return BsonHeroesList
+                .stream()
+                .map(v -> v.asString().getValue())
+                .toList();
+    }
+
+    public List<String> getUserPotions() {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        final Document userData = Database.Users.find(userId);
+        BsonArray BsonPotionsList = userData.toBsonDocument().getArray("potionsList");
+        return BsonPotionsList
+                .stream()
+                .map(v -> v.asString().getValue())
+                .toList();
+    }
+
     public void updateCurrentUsername(String username) {
         final ObjectId userId = DataManager.getCurrentUserID();
         Database.Users.updateField("username", username, userId);
+    }
+
+    public void addHeroToUser(String heroName) {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        final Document userData = Database.Users.find(userId);
+        BsonArray heroesList = userData.toBsonDocument().getArray("heroesList");
+        heroesList.add(new BsonString(heroName));
+        Database.Users.updateField("heroesList", heroesList, userId);
+    }
+
+    public void addPotionToUser(String potionName) {
+        final ObjectId userId = DataManager.getCurrentUserID();
+        final Document userData = Database.Users.find(userId);
+        BsonArray potionsList = userData.toBsonDocument().getArray("potionsList");
+        potionsList.add(new BsonString(potionName));
+        Database.Users.updateField("potionsList", potionsList, userId);
     }
 }

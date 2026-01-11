@@ -1,0 +1,28 @@
+Elf Attack.png
+size: 611,92
+repeat: none
+attack
+index: 0
+bounds: 0,0,67,92
+attack
+index: 1
+bounds: 76,0,67,92
+attack
+index: 2
+bounds: 153,0,67,92
+attack
+index: 3
+bounds: 229,0,78,92
+attack
+index: 4
+bounds: 305,0,70,92
+attack
+index: 5
+bounds: 382,0,67,92
+attack
+index: 6
+bounds: 458,0,67,92
+attack
+index: 7
+bounds: 535,0,67,92
+

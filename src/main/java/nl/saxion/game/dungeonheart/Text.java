@@ -1,10 +1,7 @@
 package nl.saxion.game.dungeonheart;
 
 
-import ch.qos.logback.core.joran.conditional.IfAction;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import nl.saxion.gameapp.GameApp;
 import nl.saxion.gameapp.screens.ScalableGameScreen;
@@ -19,6 +16,7 @@ public class Text extends ScalableGameScreen {
     int screenNumber;
     float delay = -1;
     float setDelay = 0;
+    float timer;
 
 
     public Text(int number) {
@@ -30,6 +28,7 @@ public class Text extends ScalableGameScreen {
     public void show() {
         GameApp.addTimer("Timer1", 30f, false);
         GameApp.addFont("grinched", "fonts/grinched.otf", 50);
+        GameApp.addTexture("Scroll", "textures/scrollpaper.png");
     }
 
 
@@ -38,16 +37,16 @@ public class Text extends ScalableGameScreen {
 
         GameApp.clearScreen(Color.BLACK);
 
+        timer = (float) (Scene.Story(screenNumber).length() / 6.56);
+        GameApp.setTimerDuration("Timer1", (timer - 7f));
 
         GameApp.startSpriteRendering();
 
+        GameApp.drawTextureCentered("Scroll", (float) GameApp.getWindowWidth() /2, (float) GameApp.getWindowHeight() /2, 1280, 720);
 
         text(Scene.Story(screenNumber), delta);
 
 
-        text(Scene.Story(screenNumber), delta);
-
-//        setDelay = 30f * renderedString.length();
 
         GameApp.updateTimer("Timer1");
 
@@ -72,7 +71,7 @@ public class Text extends ScalableGameScreen {
 
         if (letterIndex != sampleText.length()) {
             if (letterIndex < sampleText.length() - 1) {
-                GameApp.drawText("basic", renderedString, 0, 25, "red-500");
+                GameApp.drawTextCentered("basic", renderedString, getWorldWidth()/2,getWorldHeight()/2, Color.BLACK);
                 if (textAnimationFrames > TimeBetweenFrames) {
                     renderedString += sampleText.split("")[letterIndex];
                     textAnimationFrames = 0f;
@@ -89,8 +88,9 @@ public class Text extends ScalableGameScreen {
     @Override
     public void hide() {
 
-
+        GameApp.disposeTexture("Scroll");
         GameApp.disposeFont("grinched");
+        GameApp.disposeAtlas("Dark Elf");
 
     }
 }

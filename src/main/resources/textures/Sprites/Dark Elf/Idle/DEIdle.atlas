@@ -1,0 +1,18 @@
+Dark Elf Idle.png
+size: 404,97
+repeat: none
+idle
+index: 0
+bounds: 0,0,80,97
+idle
+index: 1
+bounds: 81,0,80,97
+idle
+index: 2
+bounds: 162,0,80,97
+idle
+index: 3
+bounds: 243,0,80,97
+idle
+index: 4
+bounds: 324,0,80,97

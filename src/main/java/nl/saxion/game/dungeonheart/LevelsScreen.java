@@ -98,10 +98,9 @@ public class LevelsScreen extends ScalableGameScreen  {
         levelButtons.get(6).height = (float) (LEVEL_BUTTON_WIDTH * 1.2);
         levelButtons.get(6).render(630, 280);
 
-        GameApp.addScreen("Move", new combatMovement());
+        GameApp.addScreen("Shop", new Shop());
 
-
-        levelButtons.get(1).onClick = () -> GameApp.switchScreen("Move");
+        levelButtons.get(1).onClick = () -> GameApp.switchScreen("Shop");
 
 
         heart.render(830, 20);

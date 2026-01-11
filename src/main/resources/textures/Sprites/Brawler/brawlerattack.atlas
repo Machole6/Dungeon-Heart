@@ -1,0 +1,15 @@
+Attack_1.png
+size:512,128
+repeat:none
+attack
+index:1
+bounds:128,0,128,128
+attack
+index:0
+bounds:0,0,128,128
+attack
+index:2
+bounds:256,0,128,128
+attack
+index:3
+bounds:384,0,128,128

@@ -6,18 +6,13 @@ import nl.saxion.gameapp.screens.ScalableGameScreen;
 
 public class combatMovement extends ScalableGameScreen {
 
-    float animationFrames;
-    float timeBetweenFrames = 0.5f;
-    int i = 0;
+
     int x = 200;
     int magex = 800;
     int magey = 200;
     int y = 200;
-    boolean Animationfinished = false;
-    boolean render = true;
     float setHeight = 0;
     float setWidth = 0;
-
 
 
     public combatMovement() {
@@ -27,21 +22,17 @@ public class combatMovement extends ScalableGameScreen {
 
     @Override
     public void show() {
-        for (int i = 0; i< 5; i++) {
-            GameApp.addTexture("Knight" + i, "textures/Knight/Knight attack-" + i + ".png");
-        }
-        for (int i = 0; i< 9; i++) {
-            GameApp.addTexture("Mage" + i, "textures/Mage/Mage attack-" + i + ".png");
-        }
-        for (int i = 0; i< 4; i++) {
-            GameApp.addTexture("Ninja" + i, "textures/Ninja/Ninja attack-" + i + ".png");
-        }
-        for (int i = 0; i< 5; i++) {
-            GameApp.addTexture("Samurai" + i, "textures/Samurai/Samurai attack-" + i + ".png");
-        }
-        for (int i = 0; i< 3; i++) {
-            GameApp.addTexture("Brawler" + i, "textures/Brawler/Brawler attack-" + i + ".png");
-        }
+
+        GameApp.addTextureAtlas("Knight", "textures/Sprites/Knight/attack_1.atlas");
+        GameApp.addAnimationFromAtlas("KnightAttack", "Knight", "attack", 1f, false);
+        GameApp.addTextureAtlas("Mage", "textures/Sprites/Mage/mageattack.atlas");
+        GameApp.addAnimationFromAtlas("MageAttack", "Mage", "attack", 1f, false);
+        GameApp.addTextureAtlas("Brawler", "textures/Sprites/Brawler/brawlerattack.atlas");
+        GameApp.addAnimationFromAtlas("BrawlerAttack", "Brawler", "attack", 1f, false);
+        GameApp.addTextureAtlas("Ninja", "textures/Sprites/Ninja/Ninjaattack.atlas");
+        GameApp.addAnimationFromAtlas("NinjaAttack", "Ninja", "attack", 1f, false);
+        GameApp.addTextureAtlas("Samurai", "textures/Sprites/Samurai/SamuraiAttack.atlas");
+        GameApp.addAnimationFromAtlas("SamuraiAttack", "Samurai", "attack", 1f, false);
 
     }
 
@@ -49,25 +40,25 @@ public class combatMovement extends ScalableGameScreen {
     public void render(float delta) {
 
         super.render(delta);
-
-        setHeight = GameApp.getTextureHeight("Knight0");
-        setWidth = GameApp.getTextureWidth("Knight0");
-
-
         GameApp.clearScreen(Color.BLACK);
+
+        GameApp.updateAnimation("KnightAttack");
+        GameApp.updateAnimation("MageAttack");
+        GameApp.updateAnimation("NinjaAttack");
+        GameApp.updateAnimation("BrawlerAttack");
+        GameApp.updateAnimation("SamuraiAttack");
 
 
         GameApp.startSpriteRendering();
 
-        if(render){
-            GameApp.drawTexture("Knight0", magex, magey, setWidth, setHeight, 0, true, false);
+
+        GameApp.drawAnimation("NinjaAttack", magex, magey, setWidth, setHeight, 0, true, false);
+
+
+        GameApp.drawAnimation("MageAttack", x, y);
+        if (!(x == magex)) {
+            x += ((magex - 200) / 360);
         }
-
-        heroMovement(delta, "Mage");
-
-        //System.out.println(setHeight + "\n" + setWidth);
-
-
         GameApp.endSpriteRendering();
 
     }
@@ -75,62 +66,11 @@ public class combatMovement extends ScalableGameScreen {
 
     @Override
     public void hide() {
-        for (int i = 0; i <= 4; i++) {
-            GameApp.disposeTexture("Knight" + i);
-            GameApp.disposeTexture("Ninja" + i);
-        }
-        for (int i = 0; i <= 9; i++) {
-            GameApp.disposeTexture("Mage" + i);
-        }
-        for (int i = 0; i< 5; i++) {
-            GameApp.disposeTexture("Samurai" + i);
-        }
-        for (int i = 0; i< 3; i++) {
-            GameApp.disposeTexture("Brawler" + i);
-        }
+        GameApp.disposeAtlas("Knight");
+        GameApp.disposeAtlas("Mage");
+        GameApp.disposeAtlas("Brawler");
+        GameApp.disposeAtlas("Ninja");
+        GameApp.disposeAtlas("Samurai");
     }
-
-
-    public void heroMovement(float delta, String heroClass) {
-
-        int frames = switch (heroClass) {
-            case "Knight", "Samurai" -> 4;
-            case "Mage" -> 8;
-            case "Ninja" -> 3;
-            case "Brawler" -> 2;
-            default -> 0;
-        };
-
-        if(heroClass.equals("Brawler")){
-            setWidth = (float) (GameApp.getTextureWidth("Knight0") * 2.8);
-            setHeight= (float) (GameApp.getTextureHeight("Knight0") * 1.86);
-
-        }
-        else{
-            setWidth = GameApp.getTextureWidth(heroClass + 0);
-            setHeight = GameApp.getTextureHeight(heroClass + 0);
-        }
-
-        if(Animationfinished){
-            GameApp.drawTexture(heroClass + 0, 200, 200);
-            return;
-        }
-
-        GameApp.drawTexture((heroClass + i), x, y, setWidth, setHeight);
-
-        if (animationFrames > timeBetweenFrames && i < frames) {
-            x += ((magex - 200) / frames);
-            y += ((magey - 200) / frames);
-            animationFrames = 0f;
-            i++;
-        }
-        else if (animationFrames > timeBetweenFrames && x >= magex) {
-            Animationfinished = true;
-            render = false;
-        }
-
-        animationFrames += delta;
-    }
-
 
 }
