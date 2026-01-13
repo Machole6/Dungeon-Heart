@@ -34,5 +34,8 @@ public class Scene {
 
         return dialogue[number];
     }
+
+
+    static String[] ItemDescription = {"Gladiator", "Elf", "Dark Elf", "Healing", "Harm"};
 }
 

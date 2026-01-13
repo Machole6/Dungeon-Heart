@@ -1,30 +1,21 @@
 package nl.saxion.game.dungeonheart.combat;
 
-public class Hero {
-    private String name;
-    private int health;
-    private  int attackPower;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Hero(String name,int health,int attackPower){
-        this.name = name;
-        this.health = health;
-        this.attackPower = attackPower;
+public class Hero extends Unit {
+    private final List<Skill> skills = new ArrayList<>();
+
+    public Hero(String name, int health, int attackPower) {
+        super(name, health, attackPower);
+        skills.add(new BasicAttack());
     }
 
-    public void attack(Enemy enemy) {
-        enemy.takeDamage(attackPower);
+    public void addSkill(Skill skill) {
+        skills.add(skill);
     }
 
-    public void takeDamage(int damage) {
-        health -= damage;
-        if (health < 0) health = 0;
+    public List<Skill> getSkills() {
+        return skills;
     }
-
-    public boolean isAlive() {
-        return health > 0;
-    }
-
-    public String getName() { return name; }
-    public int getHealth() { return health; }
 }
-

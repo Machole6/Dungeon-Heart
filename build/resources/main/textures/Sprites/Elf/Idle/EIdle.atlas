@@ -1,0 +1,21 @@
+Elf Idle.png
+size: 482,100
+repeat: none
+idle
+index: 0
+bounds: 0,0,70,100
+idle
+index: 1
+bounds: 81,0,70,100
+idle
+index: 2
+bounds: 160,0,70,100
+idle
+index: 3
+bounds: 240,0,70,100
+idle
+index: 4
+bounds: 320,0,70,100
+idle
+index: 5
+bounds: 400,0,70,100

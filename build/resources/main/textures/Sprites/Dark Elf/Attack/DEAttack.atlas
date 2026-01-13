@@ -1,0 +1,15 @@
+DE_attack.png
+size: 343,90
+repeat: none
+attack
+index: 0
+bounds: 0,0,85,90
+attack
+index: 1
+bounds: 86,0,85,90
+attack
+index: 2
+bounds: 172,0,85,90
+attack
+index: 3
+bounds: 258,0,85,90

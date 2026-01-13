@@ -27,10 +27,7 @@ public class MainMenuScreen extends ScalableGameScreen {
     private final Button startButton = new Button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXTURE, "startButton", "START", BUTTON_FONT);
     private final Texture background = new Texture(1280, 720, "mainScreenBackground");
     private final Texture heart = new Texture(300, 300, "heart");
-    private final Button testCombatButton = new Button(  //combat test button
-            BUTTON_WIDTH-500, BUTTON_HEIGHT-60, BUTTON_TEXTURE,
-            "testCombatButton", "TEST COMBAT", BUTTON_FONT
-    );
+    private final Button testCombatButton = new Button(BUTTON_WIDTH-500, BUTTON_HEIGHT-60, BUTTON_TEXTURE, "testCombatButton", "TEST COMBAT", BUTTON_FONT);
 
     @Override
     public void show() {
@@ -61,7 +58,16 @@ public class MainMenuScreen extends ScalableGameScreen {
 
         exitButton.onClick = GameApp::quit;
         leadersBoardButton.onClick = () -> GameApp.switchScreen("LeadersScreen");
-        startButton.onClick = () -> GameApp.switchScreen("LevelsScreen");
+        startButton.onClick = () -> {
+            String username = Database.Users.getCurrentUsername();
+            System.out.println(username.toString());
+            if (username == null || username.isEmpty()) {
+                GameApp.switchScreen("UsernameInputScreen");
+            } else {
+                GameApp.switchScreen("LevelsScreen");
+            }
+        };
+
         testCombatButton.onClick = () -> GameApp.switchScreen("CombatScreen");
 
         Component.setOnHoverFor((button) -> {
