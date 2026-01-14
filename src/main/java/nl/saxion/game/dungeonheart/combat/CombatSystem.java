@@ -1,7 +1,7 @@
 package nl.saxion.game.dungeonheart.combat;
 
-import nl.saxion.game.dungeonheart.componenets.HeroComponent;
 import nl.saxion.game.dungeonheart.componenets.EnemyComponent;
+import nl.saxion.game.dungeonheart.componenets.HeroComponent;
 
 import java.util.List;
 import java.util.Random;
@@ -12,79 +12,96 @@ public class CombatSystem {
         SELECT_HERO,
         SELECT_ENEMY,
         ENEMY_TURN,
-        CHECK_WIN
+        END_COMBAT
     }
 
     private State currentState = State.SELECT_HERO;
-    private HeroComponent selectedHero = null;
+
+    private HeroComponent selectedHero;
+    private Skill selectedSkill; // NEW: selected skill of the hero
 
     private final List<HeroComponent> heroComponents;
     private final List<EnemyComponent> enemyComponents;
+
     private final Random random = new Random();
 
     public CombatSystem(List<HeroComponent> heroes, List<EnemyComponent> enemies) {
         this.heroComponents = heroes;
         this.enemyComponents = enemies;
+    }
 
-        for (HeroComponent hc : heroComponents) {
-            hc.onClick = () -> {
-                if (currentState == State.SELECT_HERO) {
-                    selectedHero = hc;
-                    currentState = State.SELECT_ENEMY;
-                }
-            };
-        }
+    public void selectHero(HeroComponent hero) {
+        if (currentState != State.SELECT_HERO) return;
+        if (!hero.getHero().isAlive()) return;
 
-        // Assign click behavior for enemies
-        for (EnemyComponent ec : enemyComponents) {
-            ec.onClick = () -> {
-                if (currentState == State.SELECT_ENEMY && selectedHero != null) {
+        selectedHero = hero;
+        selectedSkill = hero.getHero().getSkills().get(0);
+        currentState = State.SELECT_ENEMY;
+    }
 
-                    selectedHero.getHero().attack(ec.getEnemy());
-                    selectedHero = null;
+    public void selectEnemy(EnemyComponent enemy) {
+        if (currentState != State.SELECT_ENEMY) return;
+        if (selectedHero == null || selectedSkill == null) return;
+        if (!enemy.getEnemy().isAlive()) return;
 
-                    if (!ec.getEnemy().isAlive()) {
-                        enemyComponents.remove(ec);
-                    }
+        selectedSkill.use(selectedHero.getHero(), enemy.getEnemy());
 
-                    currentState = State.ENEMY_TURN;
-                    enemyTurn();
-                }
-            };
+        selectedHero = null;
+        selectedSkill = null;
+
+        removeDeadUnits();
+        checkEndConditions();
+
+        if (currentState != State.END_COMBAT) {
+            currentState = State.ENEMY_TURN;
+            enemyTurn();
         }
     }
 
-    private void enemyTurn() {
-        for (EnemyComponent ec : enemyComponents) {
-            if (!heroComponents.isEmpty()) {
-                HeroComponent target = heroComponents.get(random.nextInt(heroComponents.size()));
-                ec.getEnemy().attack(target.getHero());
+    // Enemy turn logic
+    public void enemyTurn() {
+        for (EnemyComponent enemyComponent : enemyComponents) {
+            if (!enemyComponent.getEnemy().isAlive()) continue;
+            if (heroComponents.isEmpty()) break;
 
-                if (!target.getHero().isAlive()) {
-                    heroComponents.remove(target);
-                }
-            }
+            HeroComponent target =
+                    heroComponents.get(random.nextInt(heroComponents.size()));
+
+            enemyComponent.getEnemy().attack(target.getHero());
+            removeDeadUnits();
         }
 
-        checkWin();
-    }
+        checkEndConditions();
 
-    private void checkWin() {
-        if (heroComponents.isEmpty()) {
-            currentState = State.CHECK_WIN;
-            System.out.println("Enemies win!");
-        } else if (enemyComponents.isEmpty()) {
-            currentState = State.CHECK_WIN;
-            System.out.println("Heroes win!");
-        } else {
+        if (currentState != State.END_COMBAT) {
             currentState = State.SELECT_HERO;
         }
-
-        System.out.println("DEBUG -> heroes=" + heroComponents.size() +
-                ", enemies=" + enemyComponents.size());
-
     }
 
+    // Remove dead units from the board
+    public void removeDeadUnits() {
+        enemyComponents.removeIf(ec -> !ec.getEnemy().isAlive());
+        heroComponents.removeIf(hc -> !hc.getHero().isAlive());
+    }
+
+    // Check for win/loss
+    public void checkEndConditions() {
+        if (heroComponents.isEmpty()) {
+            currentState = State.END_COMBAT;
+            System.out.println("Enemies win!");
+        } else if (enemyComponents.isEmpty()) {
+            currentState = State.END_COMBAT;
+            System.out.println("Heroes win!");
+        }
+    }
+
+    public void selectSkill(Skill skill) {
+        if (selectedHero != null) {
+            selectedSkill = skill;
+        }
+    }
+
+    // Getters
     public State getCurrentState() {
         return currentState;
     }

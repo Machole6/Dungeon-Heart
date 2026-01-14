@@ -7,6 +7,7 @@ import nl.saxion.game.dungeonheart.database.Database;
 import nl.saxion.gameapp.GameApp;
 import nl.saxion.gameapp.screens.ScalableGameScreen;
 
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -41,8 +42,8 @@ public class Shop extends ScalableGameScreen {
         GameApp.addTexture("SoldSpriteFrame", "textures/Shop/Red Sprite frame.png");
         GameApp.addTexture("PotionFrame", "textures/Shop/Potion Frame.png");
         GameApp.addTexture("SoldPotionFrame", "textures/Shop/Red Potion Frame.png");
-        GameApp.addTexture("HPPotion", "textures/Shop/HP.png");
-        GameApp.addTexture("HarmPotion", "textures/Shop/Harm.png");
+        GameApp.addTexture("HPPotion", "textures/Potions/HP.png");
+        GameApp.addTexture("HarmPotion", "textures/Potions/Harm.png");
         GameApp.addFont("grinched", "fonts/grinched.otf", 50);
         GameApp.addFont("Arial", "fonts/pixel-arial-14.ttf", 50);
         GameApp.addTextureAtlas("Gladiator", "textures/Sprites/Gladiator/Idle/Gidle.atlas");
@@ -81,6 +82,7 @@ public class Shop extends ScalableGameScreen {
 
 
         System.out.println(Database.Users.getUserHeroes() + "\n" + Database.Users.getUserPotions());
+
 
 
 
