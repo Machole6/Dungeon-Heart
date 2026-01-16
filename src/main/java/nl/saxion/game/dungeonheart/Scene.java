@@ -36,6 +36,6 @@ public class Scene {
     }
 
 
-    static String[] ItemDescription = {"Gladiator", "Elf", "Dark Elf", "Healing", "Harm"};
+    static String[] ItemDescription = {"Gladiator","Elf", "DarkElf", "Brawler", "Samurai", "Vampire", "Shogun", "Healing", "Harm"};
 }
 

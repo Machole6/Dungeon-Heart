@@ -1,5 +1,6 @@
 package nl.saxion.game.dungeonheart;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import nl.saxion.game.dungeonheart.componenets.Button;
 import nl.saxion.game.dungeonheart.componenets.Component;
@@ -10,6 +11,10 @@ import nl.saxion.gameapp.screens.ScalableGameScreen;
 import javax.xml.crypto.Data;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class Shop extends ScalableGameScreen {
 
@@ -18,7 +23,8 @@ public class Shop extends ScalableGameScreen {
     int spriteWidth = 120;
     int itemx = 220;
     int itemy = 300;
-    int current;
+    int spritex = 270;
+    int counter = 0;
     private final int Frame_width = 200;
     private final int Frame_height = 200;
     private final String BUTTON_FONT = "jumpsWinter";
@@ -27,7 +33,8 @@ public class Shop extends ScalableGameScreen {
     private final String Potion_frame = "PotionFrame";
     private final String Potion_frame_onHover = "SoldPotionFrame";
     ArrayList<Item> shopItems = new ArrayList<>();
-
+    ArrayList<Integer> randomNumbers = new ArrayList<>();
+    int size = 7;
 
     public Shop() {
         super(1280, 720);
@@ -44,14 +51,23 @@ public class Shop extends ScalableGameScreen {
         GameApp.addTexture("SoldPotionFrame", "textures/Shop/Red Potion Frame.png");
         GameApp.addTexture("HPPotion", "textures/Potions/HP.png");
         GameApp.addTexture("HarmPotion", "textures/Potions/Harm.png");
+        GameApp.addTexture("Brawler", "textures/Sprites/Brawler/Brawler attack-0.png");
+        GameApp.addTexture("Samurai", "textures/Sprites/Samurai/Samurai attack-1.png");
+        GameApp.addTexture("Ninja", "textures/Sprites/Ninja/Ninja attack-4.png");
+        GameApp.addTexture("Mage", "textures/Sprites/Mage/Mage attack-2.png");
+        GameApp.addTexture("Knight", "textures/Sprites/Knight/Knight attack-0.png");
+        GameApp.addTexture("Shogun", "textures/Sprites/Shogun/Shogun-idle.png");
+        GameApp.addTexture("Vampire", "textures/Sprites/Vampire/Vampire-idle.png");
+
+
         GameApp.addFont("grinched", "fonts/grinched.otf", 50);
         GameApp.addFont("Arial", "fonts/pixel-arial-14.ttf", 50);
         GameApp.addTextureAtlas("Gladiator", "textures/Sprites/Gladiator/Idle/Gidle.atlas");
-        GameApp.addAnimationFromAtlas("GladIdle", "Gladiator", "idle", 1f, true);
+        GameApp.addAnimationFromAtlas("Gladiator", "Gladiator", "idle", 1f, true);
         GameApp.addTextureAtlas("Elf", "textures/Sprites/Elf/Idle/EIdle.atlas");
-        GameApp.addAnimationFromAtlas("ElfIdle", "Elf", "idle", 1f, true);
+        GameApp.addAnimationFromAtlas("Elf", "Elf", "idle", 1f, true);
         GameApp.addTextureAtlas("DarkElf", "textures/Sprites/Dark Elf/Idle/DEIdle.atlas");
-        GameApp.addAnimationFromAtlas("DEIdle", "DarkElf", "idle", 1f, true);
+        GameApp.addAnimationFromAtlas("DarkElf", "DarkElf", "idle", 1f, true);
         loadItems();
 
     }
@@ -63,9 +79,28 @@ public class Shop extends ScalableGameScreen {
 
         GameApp.clearScreen();
 
-        GameApp.updateAnimation("GladIdle");
-        GameApp.updateAnimation("ElfIdle");
-        GameApp.updateAnimation("DEIdle");
+        GameApp.updateAnimation("Gladiator");
+        GameApp.updateAnimation("Elf");
+        GameApp.updateAnimation("DarkElf");
+        ArrayList<String> shopSprites = new ArrayList<>(Arrays.asList("Gladiator","Elf", "DarkElf", "Brawler", "Samurai", "Vampire", "Shogun"));
+        List<String> HeroesInParty = Database.Users.getUserHeroes();
+
+//        for (int i = shopSprites.size() - 1; i >= 0; i--) {
+//            if (HeroesInParty.contains(shopSprites.get(i))) {
+//                shopSprites.remove(i);
+//                shopItems.remove(i);
+//            }
+//        }
+
+//        for (int i = shopItems.size() - 1; i >= 0; i--) {
+//            Item item = shopItems.get(i);
+//
+//            if (item.unit && HeroesInParty.contains(item.Description)) {
+//                shopItems.remove(i);
+//                shopSprites.remove(item.Description);
+//            }
+//        }
+
 
 
         GameApp.startSpriteRendering();
@@ -74,15 +109,23 @@ public class Shop extends ScalableGameScreen {
         GameApp.drawTextureCentered("sign", (float) GameApp.getWindowWidth()/2, 620);
         GameApp.drawTextCentered("basic", "Shop", getWorldWidth()/2,660, Color.BLACK);
         itemBackground();
-        GameApp.drawAnimation("DEIdle", 910, 300, spriteWidth, spriteHeight);
-        GameApp.drawAnimation("ElfIdle", 590, 300, spriteWidth, spriteHeight);
-        GameApp.drawAnimation("GladIdle", 270, 300, spriteWidth, spriteHeight);
+        for (int i=0; i<3; i++){
+            if (shopSprites.get(randomNumbers.get(i)).equals("Gladiator") || shopSprites.get(randomNumbers.get(i)).equals("Elf") || shopSprites.get(randomNumbers.get(i)).equals("DarkElf")) {
+                GameApp.drawAnimation(shopSprites.get(randomNumbers.get(i)), (spritex + (i * 320)), 300, spriteWidth, spriteHeight);
+            }
+            else {
+                GameApp.drawTexture(shopSprites.get(randomNumbers.get(i)), (spritex + (i * 320)), 300, spriteWidth, spriteHeight);
+            }
+        }
+
         GameApp.drawTexture("HPPotion", 260, 115, spriteWidth-20, spriteHeight-25);
         GameApp.drawTexture("HarmPotion", 580, 115, spriteWidth-20, spriteHeight-25);
 
+        if (counter == 2){
+            GameApp.switchScreen("MainMenuScreen");
+        }
 
-        System.out.println(Database.Users.getUserHeroes() + "\n" + Database.Users.getUserPotions());
-
+        System.out.println(HeroesInParty + "\n" + Database.Users.getUserPotions());
 
 
 
@@ -93,55 +136,53 @@ public class Shop extends ScalableGameScreen {
 
     public void loadItems(){
 
-        Item Gladiator = new Item();
-        Gladiator.Button = new Button(Frame_width, Frame_height, Sprite_frame, "Glad", "", BUTTON_FONT);
-        Gladiator.Description = Scene.ItemDescription[0];
-        Gladiator.cost = 300;
-        Gladiator.unit = true;
+        for (int i =0; i<7; i++){
 
-        Item Elf = new Item();
-        Elf.Button = new Button(Frame_width, Frame_height, Sprite_frame, "Elf", "", BUTTON_FONT);
-        Elf.Description = Scene.ItemDescription[1];
-        Elf.cost = 300;
-        Elf.unit = true;
-
-        Item DarkElf = new Item();
-        DarkElf.Button = new Button(Frame_width, Frame_height, Sprite_frame, "DarkElf", "", BUTTON_FONT);
-        DarkElf.Description = Scene.ItemDescription[2];
-        DarkElf.cost = 300;
-        DarkElf.unit = true;
+            Item character = new Item();
+            character.Button = new Button(Frame_width, Frame_height, Sprite_frame, Scene.ItemDescription[i], "", BUTTON_FONT);
+            character.Description = Scene.ItemDescription[i];
+            character.cost = 300;
+            character.unit = true;
+            shopItems.add(character);
+        }
 
         Item HP = new Item();
         HP.Button = new Button(Frame_width, Frame_height, Potion_frame, "HP", "", BUTTON_FONT);
-        HP.Description = Scene.ItemDescription[3];
+        HP.Description = Scene.ItemDescription[7];
         HP.cost = 300;
         HP.unit = false;
 
         Item Harm = new Item();
         Harm.Button = new Button(Frame_width, Frame_height, Potion_frame, "Harm", "", BUTTON_FONT);
-        Harm.Description = Scene.ItemDescription[4];
+        Harm.Description = Scene.ItemDescription[8];
         Harm.cost = 300;
         Harm.unit = false;
 
-        shopItems.add(Gladiator);
-        shopItems.add(Elf);
-        shopItems.add(DarkElf);
+
         shopItems.add(HP);
         shopItems.add(Harm);
 
+        while (randomNumbers.size()<3){
+            int random = GameApp.randomInt(0, size);
+            if (!randomNumbers.contains(random)){
+                randomNumbers.add(random);
+            }
+        }
     }
 
 
     public void purchase(Item selectedItem){
 
-        if (!Database.Users.getUserHeroes().contains(selectedItem.Description) && !Database.Users.getUserPotions().contains(selectedItem.Description)) {
-            if (!selectedItem.unit){
-                Database.Users.addPotionToUser(selectedItem.Description);
-            }
-            else {
+        if (selectedItem.unit){
+            if(!Database.Users.getUserHeroes().contains(selectedItem.Description)){
                 Database.Users.addHeroToUser(selectedItem.Description);
-
+                counter++;
             }
+        }
+        else if (!selectedItem.unit){
+            Database.Users.addPotionToUser(selectedItem.Description);
+            counter++;
+
         }
 
 
@@ -149,37 +190,45 @@ public class Shop extends ScalableGameScreen {
 
     public void itemBackground(){
         for (int i=0; i<3; i++) {
-            final int index = i;
-            shopItems.get(i).Button.render(itemx + (i*320), itemy);
-            current = i;
+            final int index = randomNumbers.get(i);
+            shopItems.get(index).Button.render(itemx + (i*320), itemy);
+
             Component.setOnHoverFor((button) -> {
                 button.changeTexture(Sprite_frame_onHover);
                 GameApp.drawText("Arial", shopItems.get(index).Description, 850, 100, Color.BLACK);
-            }, shopItems.get(i).Button);
+            }, shopItems.get(index).Button);
+
+            Component.setOnUnhoverFor((button) -> {
+                button.changeTexture(Sprite_frame);
+            }, shopItems.get(index).Button);
         }
-        for (int i=3; i<5; i++) {
-            shopItems.get(i).Button.render(220 + (320*(i-3)), 100);
-            current = i;
+        for (int i=7; i<9; i++) {
+            shopItems.get(i).Button.render(220 + (320*(i-7)), 100);
+
             final int index = i;
+            
             Component.setOnHoverFor((button) -> {
                 button.changeTexture(Potion_frame_onHover);
                 GameApp.drawText("Arial", shopItems.get(index).Description, 850, 100, Color.BLACK);
+            },shopItems.get(i).Button);
+
+            Component.setOnUnhoverFor((button) -> {
+                button.changeTexture(Potion_frame);
             }, shopItems.get(i).Button);
 
-            for (Item item: shopItems){
-                item.Button.onClick = () -> purchase(item);
-            }
-        }
-        Component.setOnUnhoverFor((button) -> {
-            button.changeTexture(Potion_frame);
-        }, shopItems.get(3).Button, shopItems.get(4).Button);
 
-        Component.setOnUnhoverFor((button) -> {
-            button.changeTexture(Sprite_frame);
-        }, shopItems.get(0).Button, shopItems.get(1).Button, shopItems.get(2).Button);
+
+
+        }
+
+        for (Item item: shopItems){
+            item.Button.onClick = () -> purchase(item);
+        }
 
 
     }
+
+
     @Override
     public void hide() {
 

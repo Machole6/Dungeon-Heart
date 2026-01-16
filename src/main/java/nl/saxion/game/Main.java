@@ -18,7 +18,6 @@ public class Main {
         GameApp.addScreen("LeadersScreen", new LeadersScreen());
         GameApp.addScreen("LevelsScreen", new LevelsScreen());
         GameApp.addScreen("UsernameInputScreen", new UsernameInputScreen());
-        GameApp.addScreen("LevelHUD", new levelHUD());
 
         List<Hero> heroes = Arrays.asList(
                 new Hero("Knight", 100, 20),
